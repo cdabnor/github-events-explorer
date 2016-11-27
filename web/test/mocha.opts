@@ -1,0 +1,4 @@
+--recursive
+./services/**/*.test.js
+--require ./test/helpers/chai
+--require ./test/helpers/sinon
