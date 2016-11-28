@@ -6,6 +6,7 @@ web:
     - "3030:3000"
   links:
     - "cache:redis"
+    - "db:mongodb"
   command: nodemon -L web/app.js
 
 nginx:
@@ -27,3 +28,5 @@ db:
   image: mongo:3.2.11
   volumes:
     - "./mongodb_data:/data/db"
+  ports:
+    - "27018:27017"

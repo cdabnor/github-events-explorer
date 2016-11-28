@@ -5,11 +5,15 @@ let MongoClient = require('mongodb').MongoClient;
 let bodyParser = require('body-parser');
 
 // Wire up dependencies
+let DbService = require('./services/db/DbService');
+let mongodbService = require('./services/db/MongoDbService')(
+  DbService, MongoClient
+);
 let actorService = require('./services/ActorService')(
-  MongoClient
+  mongodbService
 );
 let reposService = require('./services/ReposService')(
-  MongoClient
+  mongodbService
 );
 let actorHandler = require('./handlers/ActorHandler')(
   actorService

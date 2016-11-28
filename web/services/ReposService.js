@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(MongoClient) {
+module.exports = function(MongoDbService) {
   return class ReposService {
     static getTopActors() {
 
