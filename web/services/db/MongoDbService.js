@@ -124,6 +124,60 @@ module.exports = function(MongoClient) {
               reject(err);
             }
           });
+        }, (err) => {
+          reject(err);
+        });
+      })
+    }
+
+    static getReposTopActors() {
+      return new Promise((resolve, reject) => {
+        MongoDbService.connection.then((connection)=> {
+          let collection = connection.collection('events');
+          collection.aggregate([
+            {
+              $match: {}
+            }, {
+              $group: {
+                _id: { id: "$repo.id", name: '$repo.name', url: '$repo.url' },
+                contributors: {
+                  $push: "$actor"
+                },
+                count: {
+                  $sum: 1
+                }
+              }
+            }
+          ]).toArray((err, documents) => {
+            if(!err) {
+              var repos = [];
+              var contributors = {};
+              documents.forEach((d) => {
+                var repo = d._id;
+                // create map of contributor to
+                // contribution count to determine top contributor
+                // TODO: Perform this as part of the MongoDB aggregation
+                repo.topContributor = null;
+                d.contributors.forEach((c) => {
+                  if(contributors[c.login]) {
+                    contributors[c.login].count += 1
+                  } else {
+                    contributors[c.login] = c;
+                    contributors[c.login].count = 1;
+                  }
+
+                  if(!repo.topContributor || c.count > repo.topContributor.count) {
+                    repo.topContributor = c;
+                  }
+                });
+
+                repos.push(repo);
+              });
+              resolve(repos);
+            } else {
+              reject(err);
+            }
+          });
         });
       })
     }

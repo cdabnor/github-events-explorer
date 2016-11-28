@@ -83,6 +83,35 @@ module.exports = function(redis) {
         })
       });
     }
+
+    static getReposTopActors() {
+      return new Promise((resolve, reject) => {
+        // TODO: Handle errors. For now, if cache fails we just continue
+        RedisService.connection.then((client) => {
+          client.get(`reposTopActors`, (err, reply) => {
+            resolve(JSON.parse(reply));
+          });
+        }, (err) => {
+          resolve(null);
+        })
+      });
+    }
+
+    static setReposTopActors(data) {
+      return new Promise((resolve, reject) => {
+        // TODO: Handle errors. For now, if cache fails we just continue
+        RedisService.connection.then((client) => {
+          // cache the JSON value as a String
+          client.set(`reposTopActors`, JSON.stringify(data), () => {
+            resolve(data);
+          });
+          // set TTL on the key
+          client.expire(`reposTopActors`, 60);
+        }, (err) => {
+          resolve(null);
+        })
+      });
+    }
   }
 
   return RedisService;
