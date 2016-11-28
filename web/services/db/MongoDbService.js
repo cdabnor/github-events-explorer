@@ -2,9 +2,9 @@
 
 var _db;
 
-module.exports = function(DbService, MongoClient) {
+module.exports = function(MongoClient) {
 
-  class MongoDbService extends DbService {
+  class MongoDbService {
     static get connection() {
       return new Promise((resolve, reject) => {
         if(_db) {
@@ -45,6 +45,8 @@ module.exports = function(DbService, MongoClient) {
               }
             }
           );
+        }, (err) => {
+          reject(err);
         });
       });
     }
@@ -78,6 +80,8 @@ module.exports = function(DbService, MongoClient) {
               reject(err);
             }
           });
+        }, (err) => {
+          reject(err);
         });
       })
     }
@@ -101,7 +105,7 @@ module.exports = function(DbService, MongoClient) {
                 count: {
                   $sum: 1
                 }
-              },
+              }
             },
             {
               $sort: {

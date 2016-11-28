@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(MongoDbService) {
+module.exports = function(RedisService, MongoDbService) {
   return class ReposService {
     static getTopActors() {
 

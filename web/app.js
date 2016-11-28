@@ -2,18 +2,23 @@
 
 let express = require('express');
 let MongoClient = require('mongodb').MongoClient;
+let redis = require('redis');
 let bodyParser = require('body-parser');
 
 // Wire up dependencies
-let DbService = require('./services/db/DbService');
-let mongodbService = require('./services/db/MongoDbService')(
-  DbService, MongoClient
+let redisService = require('./services/cache/RedisService')(
+  redis
 );
+
+let mongodbService = require('./services/db/MongoDbService')(
+  MongoClient
+);
+
 let actorService = require('./services/ActorService')(
-  mongodbService
+  redisService, mongodbService
 );
 let reposService = require('./services/ReposService')(
-  mongodbService
+  redisService, mongodbService
 );
 let actorHandler = require('./handlers/ActorHandler')(
   actorService
