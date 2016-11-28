@@ -3,7 +3,7 @@
   (the Actor) and it will return the following:</p>
 <ul>
   <li>Actor details</li>
-  <li>List of Actor's contributed repositories
+  <li>List of repositories the Actor has contributed to
 </ul>
 
 <p>Please enter a Github username to search on:</p>
@@ -17,10 +17,54 @@
     </div>
     <div layout-gt-xs="row">
       <md-input-container>
-        <md-button class="md-raised md-primary" ng-click="performSearch()">Primary</md-button>
+        <md-button class="md-raised md-primary" ng-click="performSearch()">Search</md-button>
       </md-input-container>
     </div>
   </md-content>
 
   <md-progress-linear md-mode="indeterminate" ng-if="loading"></md-progress-linear>
+
+  <div ng-if="actors.length > 0">
+    <h2>Actor Details</h2>
+    <md-table-container>
+      <table md-table>
+        <thead md-head>
+          <tr md-row>
+            <th md-column><span></span></th>
+            <th md-column>ID</th>
+            <th md-column><span>Username (login)</span></th>
+            <th md-column>Url</th>
+          </tr>
+        </thead>
+        <tbody md-body>
+          <tr md-row ng-repeat="actor in actors">
+            <td md-cell><img ng-src="{{actor.avatar_url}}" class="avatar-icon" /></td>
+            <td md-cell>{{actor.id}}</td>
+            <td md-cell>{{actor.login}}</td>
+            <td md-cell><a ng-href="{{actor.url}}" target="_blank">{{actor.url}}</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </md-table-container>
+
+    <h2>Contributed Repositories</h2>
+    <md-table-container>
+      <table md-table>
+        <thead md-head>
+          <tr md-row>
+            <th md-column>ID</th>
+            <th md-column><span>Name</span></th>
+            <th md-column>Url</th>
+          </tr>
+        </thead>
+        <tbody md-body>
+          <tr md-row ng-repeat="repo in repos">
+            <td md-cell>{{repo._id}}</td>
+            <td md-cell>{{repo.repoName}}</td>
+            <td md-cell><a ng-href="{{repo.repoUrl}}" target="_blank">{{repo.repoUrl}}</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </md-table-container>
+  </div>
 </div>

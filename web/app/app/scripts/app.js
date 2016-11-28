@@ -11,7 +11,8 @@
 angular
   .module('githubEventsExplorer', [
     'ngRoute',
-    'ngMaterial'
+    'ngMaterial',
+    'md.data.table'
   ]).config(function ($routeProvider) {
     $routeProvider
       .when('/', {

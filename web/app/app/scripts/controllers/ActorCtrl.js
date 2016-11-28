@@ -6,17 +6,19 @@ angular.module('githubEventsExplorer')
     $scope.user = {
       name: ""
     };
+    $scope.actors = [];
+    $scope.repos = [];
+
     $scope.performSearch = function(ev) {
       $scope.loading = true;
-      console.log($scope.user.name);
       $http({
         method: 'GET',
         url: '/api/actor/' + $scope.user.name
       }).then(function successCallback(response) {
         $scope.loading = false;
-        console.log(response);
+        $scope.actors = [response.data.actor];
+        $scope.repos = response.data.repos;
       }, function errorCallback(response) {
-        console.log(response);
         $scope.loading = false;
         $mdDialog.show(
           $mdDialog.alert()

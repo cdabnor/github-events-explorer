@@ -18,3 +18,8 @@ body {
 md-input-container {
   margin: 0px;
 }
+
+.avatar-icon {
+  width: 35px;
+  height: 35px;
+}
