@@ -1,1 +1,51 @@
 
+
+<p>This page allows you to query the Github events feed with a Github username
+  (the Actor) and it will return the following:</p>
+<ul>
+  <li>Repository most contributed to</li>
+  <li>Event count conributed to that repository</li>
+</ul>
+
+<p>Please enter a Github username to search on:</p>
+<div layout="column" class="md-inline-form">
+  <md-content layout-padding>
+    <div layout-gt-xs="row">
+      <md-input-container class="md-block" flex-gt-xs>
+        <label>Username</label>
+        <input ng-model="user.name">
+      </md-input-container>
+    </div>
+    <div layout-gt-xs="row">
+      <md-input-container>
+        <md-button class="md-raised md-primary" ng-click="performSearch()">Search</md-button>
+      </md-input-container>
+    </div>
+  </md-content>
+
+  <md-progress-linear md-mode="indeterminate" ng-if="loading"></md-progress-linear>
+
+  <div ng-if="repos.length > 0">
+    <h2>Most Contributed Repository</h2>
+    <md-table-container>
+      <table md-table>
+        <thead md-head>
+          <tr md-row>
+            <th md-column>ID</th>
+            <th md-column><span>Name</span></th>
+            <th md-column>Url</th>
+            <th md-column>Event Count</th>
+          </tr>
+        </thead>
+        <tbody md-body>
+          <tr md-row ng-repeat="repo in repos">
+            <td md-cell>{{repo._id}}</td>
+            <td md-cell>{{repo.repoName}}</td>
+            <td md-cell><a ng-href="{{repo.repoUrl}}" target="_blank">{{repo.repoUrl}}</a></td>
+            <td md-cell>{{repo.count}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </md-table-container>
+  </div>
+</div>
