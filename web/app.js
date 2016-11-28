@@ -29,6 +29,8 @@ let reposHandler = require('./handlers/ReposHandler')(
 
 let app = express();
 
+app.use(express.static(__dirname + '/app/dist'));
+
 app.get('/api/actor/:login', actorHandler.getActor);
 app.get('/api/actor/:login/topRepos', actorHandler.getActorTopRepos);
 

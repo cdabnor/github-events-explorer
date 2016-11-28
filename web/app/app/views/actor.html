@@ -1,0 +1,26 @@
+
+<p>This page allows you to query the Github events feed with a Github username
+  (the Actor) and it will return the following:</p>
+<ul>
+  <li>Actor details</li>
+  <li>List of Actor's contributed repositories
+</ul>
+
+<p>Please enter a Github username to search on:</p>
+<div layout="column" class="md-inline-form">
+  <md-content layout-padding>
+    <div layout-gt-xs="row">
+      <md-input-container class="md-block" flex-gt-xs>
+        <label>Username</label>
+        <input ng-model="user.name">
+      </md-input-container>
+    </div>
+    <div layout-gt-xs="row">
+      <md-input-container>
+        <md-button class="md-raised md-primary" ng-click="performSearch()">Primary</md-button>
+      </md-input-container>
+    </div>
+  </md-content>
+
+  <md-progress-linear md-mode="indeterminate" ng-if="loading"></md-progress-linear>
+</div>
