@@ -16,7 +16,7 @@
     </div>
     <div layout-gt-xs="row">
       <md-input-container>
-        <md-button class="md-raised md-primary" ng-click="performSearch()">Search</md-button>
+        <md-button class="md-raised md-primary" ng-click="performSearch()" ng-disabled="!user.name || user.name.length <= 0">Search</md-button>
       </md-input-container>
     </div>
   </md-content>
