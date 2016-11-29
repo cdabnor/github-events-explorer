@@ -7,7 +7,7 @@ web:
   links:
     - "cache:redis"
     - "db:mongodb"
-  command: nodemon -L web/app.js
+  command: npm run start
 
 nginx:
   restart: always

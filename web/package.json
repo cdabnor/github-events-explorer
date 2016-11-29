@@ -6,7 +6,8 @@
   "main": [],
   "scripts": {
     "test": "mocha",
-    "start": "nodemon -L web/app.js"
+    "start": "npm run build && nodemon -L web/app.js",
+    "build": "cd web/app && npm install && bower install --allow-root && gulp && cd ../../"
   },
   "dependencies": {
     "express": "^4.14.0",
