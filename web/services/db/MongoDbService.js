@@ -7,6 +7,8 @@ module.exports = function(MongoClient) {
   class MongoDbService {
     static get connection() {
       return new Promise((resolve, reject) => {
+        // create a shared mongo connection rather than creating a new connection
+        // each time we run a query
         if(_db) {
           resolve(_db);
         } else {
@@ -31,7 +33,7 @@ module.exports = function(MongoClient) {
       return new Promise((resolve, reject) => {
         MongoDbService.connection.then((connection)=> {
           let collection = connection.collection('events');
-          // find the actor.login details from the most recent event
+          // find the actor details from the most recent event
           collection.findOne(
             { "actor.login": login },
             {}, // return all fields
@@ -134,6 +136,10 @@ module.exports = function(MongoClient) {
       return new Promise((resolve, reject) => {
         MongoDbService.connection.then((connection)=> {
           let collection = connection.collection('events');
+          // perform mongo aggregation to gather all of the unique repos from
+          // the events
+          // TODO: Use mongo cursor to implement paging instead of loading all
+          // results into memory
           collection.aggregate([
             {
               $match: {}
@@ -166,8 +172,9 @@ module.exports = function(MongoClient) {
                     contributors[c.login].count = 1;
                   }
 
-                  if(!repo.topContributor || c.count > repo.topContributor.count) {
-                    repo.topContributor = c;
+                  if(!repo.topContributor
+                      || contributors[c.login].count > repo.topContributor.count) {
+                    repo.topContributor = contributors[c.login];
                   }
                 });
 

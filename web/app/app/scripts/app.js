@@ -27,7 +27,7 @@ angular
       })
       .when('/reposTopActors', {
         templateUrl: 'views/reposTopActors.html',
-        controller: 'ActorTopReposCtrl',
+        controller: 'ReposTopActorsCtrl',
         controllerAs: 'reposTopActors'
       })
       .otherwise({

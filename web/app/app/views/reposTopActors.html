@@ -1,1 +1,42 @@
+<p>This page allows you to query the Github events feed to return the following:</p>
+<ul>
+  <li>All repositories</li>
+  <li>Top contributor for each repository</li>
+</ul>
 
+<div layout="column" class="md-inline-form">
+  <md-content layout-padding>
+    <div layout-gt-xs="row">
+      <md-input-container>
+        <md-button class="md-raised md-primary" ng-click="performSearch()">Search</md-button>
+      </md-input-container>
+    </div>
+  </md-content>
+
+  <md-progress-linear md-mode="indeterminate" ng-if="loading"></md-progress-linear>
+
+  <div ng-if="repos.length > 0">
+    <h2>All repositories</h2>
+    <md-table-container>
+      <table md-table>
+        <thead md-head>
+          <tr md-row>
+            <th md-column>ID</th>
+            <th md-column><span>Name</span></th>
+            <th md-column>Url</th>
+            <th md-column>Top Contributor</th>
+          </tr>
+        </thead>
+        <tbody md-body>
+          <tr md-row ng-repeat="repo in repos | limitTo:quantity">
+            <td md-cell>{{repo.id}}</td>
+            <td md-cell>{{repo.name}}</td>
+            <td md-cell><a ng-href="{{repo.url}}" target="_blank">{{repo.url}}</a></td>
+            <td md-cell><a ng-href="{{repo.topContributor.url}}" target="_blank">{{repo.topContributor.login}}</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="load-more"><md-button md-no-ink class="md-primary" ng-click="loadMore()">Load more...</md-button></p>
+    </md-table-container>
+  </div>
+</div>
