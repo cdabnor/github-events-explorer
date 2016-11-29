@@ -65,6 +65,7 @@ The service layer interfaces with the following technologies to perform the func
 * MongoDB: Performs queries on MongoDB to fetch results for the incoming requests
 * Redis: Uses Redis as a cache to store/fetch results for queries before reverting to querying MongoDB
 
+Nodemon is also being used to run the NodeJS instance, this has been used so that files are watched during development and NodeJS is then reloaded when files are changed.
 
 ### Nginx
 Nginx is being used as a reverse-proxy, this allows requests to localhost:80 to be redirected to the underlying NodeJS service running inside Docker.
@@ -116,6 +117,7 @@ Angular was chosen primarily for the following reasons:
 
 ### Database
 
+* Currently all results are being returned at once from the database. This means that results have to be loaded into memory and causes a large amount of network traffic when sending the results over the RESTful interface. Paging using the MongoDB cursor should instead be used to limit the number of results returned and allow the user to page through them.
 * MongoDB data is currently stored on a host volume (in mongdb_data folder). This might need to be configured differently for production.
 * Potentially consider use of Elasticsearch instead of MongoDB if search
 requirements become more complex
@@ -134,6 +136,7 @@ the TTL
 should be contained within the container to prevent tampering.
 * UI build step being performed as part of `docker-compose up`. This is probably
 not the best place to be performing this step. This should be re-factored.
+* Nodemon being used to watch file changes and reload NodeJS. This would not be required in Production.
 * Github events are currently loaded in from a static file using a script. This would need to be improved to handle a live stream of events.
 
 
